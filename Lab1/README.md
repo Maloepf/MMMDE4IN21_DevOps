@@ -105,24 +105,13 @@ In the previous section we were building Java code on our machine to have it run
 Your Dockerfile should look like this:
 
 ```
-FROM eclipse-temurin:17-jdk-alpine
-# Build Main.java with JDK
-WORKDIR /usr/src
-COPY Main.java .
-RUN javac Main.java
-
-FROM eclipse-temurin:17-jre-alpine
-# Copy resource from previous stage
-COPY --from=0 /usr/src/Main.class .
-CMD ["java", "Main"]
-```
-
-```
+# Build
 # Build
 FROM maven:3.8.6-amazoncorretto-17 AS myapp-build
 ENV MYAPP_HOME /opt/myapp
 WORKDIR $MYAPP_HOME
 COPY pom.xml .
+RUN mvn dependency:go-offline
 COPY src ./src
 RUN mvn package -DskipTests
 
@@ -139,3 +128,17 @@ ENTRYPOINT java -jar myapp.jar
 
 We are using 2 different technologies, 17-jdk-alpine is just to use javac, then the resul is used with 17-jre-alpine to use the use the runtime technologie.
 
+Check
+```
+docker run --name simpleapi -p 8083:8080 -d maven:v1.0
+```
+``` (json)
+{
+    "id": 2,
+    "content": "Hello, World!"
+}
+```
+
+Backend API
+
+Let’s now build and run the backend API connected to the database. You can get the zipped source code here: simple-api.
