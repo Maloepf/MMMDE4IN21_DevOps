@@ -25,3 +25,4 @@ jobs:
       #finally build your app with the latest command
       - name: Build and test with Maven
         run: mvn clean install
+        working-directory: ./API/simple-api-student-main/
