@@ -244,3 +244,53 @@ Historically many companies were using Jenkins (and still a lot continue to do i
 
 2-1 What are testcontainers?
 Testcontainers is a Java library that provides lightweight, disposable containers for integration testing. It allows developers to easily spin up and manage containers, such as databases, message brokers, or other services, within their test environments, providing a consistent and isolated testing environment without the need for external dependencies.
+
+Workflow Name and Trigger
+yaml
+Copier le code
+name: CI devops 2024
+
+on:
+  push:
+    branches: 
+      - main
+      - develop
+  pull_request:
+name: Defines the name of the workflow.
+on: Specifies the events that trigger the workflow. In this case, the workflow runs on pushes to the main and develop branches, as well as on pull requests.
+Jobs
+yaml
+Copier le code
+jobs:
+  test-backend:
+    runs-on: ubuntu-22.04
+jobs: Contains one or more jobs that define the tasks to be executed.
+test-backend: Name of the job.
+runs-on: Specifies the type of virtual machine the job runs on. Here, it's set to ubuntu-22.04.
+Steps
+yaml
+Copier le code
+steps:
+  - uses: actions/checkout@v2.5.0
+steps: Contains the sequence of tasks to be performed within the job.
+actions/checkout@v2.5.0: Action used to check out the code from the repository.
+yaml
+Copier le code
+  - name: Set up JDK 17
+    uses: actions/setup-java@v3
+    with:
+      java-version: '17'
+      distribution: 'adopt'
+name: Descriptive name for the step.
+actions/setup-java@v3: Action used to set up the Java Development Kit (JDK) version 17.
+with: Specifies input parameters for the action. Here, it sets the Java version to 17 and uses the AdoptOpenJDK distribution.
+yaml
+Copier le code
+  - name: Build and test with Maven
+    run: mvn clean install
+    working-directory: ./API/simple-api-student-main/
+name: Descriptive name for the step.
+run: Specifies the shell command to be executed.
+mvn clean install: Command to clean and build the Maven project.
+working-directory: Sets the working directory for the command to the location of the Maven project (./API/simple-api-student-main/).
+
