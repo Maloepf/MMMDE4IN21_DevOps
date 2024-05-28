@@ -142,3 +142,89 @@ docker run --name simpleapi -p 8083:8080 -d maven:v1.0
 Backend API
 
 Let’s now build and run the backend API connected to the database. You can get the zipped source code here: simple-api.
+
+Http server
+
+Basics
+
+Choose an appropriate base image
+
+Create a simple landing page: index.html and put it inside your container.
+```
+FROM httpd:2.4
+COPY ./index.html /usr/local/apache2/htdocs/
+```
+
+It should be enough to now, start your container and check that eveything is working as expected.
+
+Here are commands that you may want to try to do so:
+
+- docker stats
+- docker inspect
+- docker logs
+
+Configuration
+
+You are using the default apache configuration, and it will be enough for now, you use yours by copying it in your image.
+
+Use docker exec to retrieve this default configuration from your running container /usr/local/apache2/conf/httpd.conf .
+
+
+Reverse proxy
+We will configure the http server as a simple reverse proxy server in front of our application, this server could be used to deliver a front-end application, to configure SSL or to handle load balancing.
+
+So this can be quite useful even though in our case we will keep things simple.
+
+Link application
+Docker-compose
+1- Install docker-compose if the docker compose command does not work .
+
+You may have noticed that this can be quite painful to orchestrate manually the start, stop and rebuild of our containers. Thankfully, a useful tool called docker-compose comes in handy in those situations.
+
+2- Let’s create a docker-compose.yml file with the following structure to define and drive our containers:
+
+
+1-3 Document docker-compose most important commands.
+
+Services : all the containers that are going to be needed
+    name of the service (container)
+        build: path to the dockerfile
+        networks: name of the network to connect to 
+        depends: dependancy on db, services,...
+        ports: wich port to connect to for external communication
+
+```
+version: '3.7'
+
+services:
+    backend: #definition of the backend container
+        container_name: "backend" #fixing the name of the container
+        build: #instructions to follow to build it
+          context: "C:\\Users\\malol\\OneDrive - Fondation EPF\\EPF\\4A\\S2\\DevOps\\MMMDE4IN21_DevOps\\Lab1\\API\\simple-api-student-main"
+        networks: #wich to connect to
+          - app-network
+        depends_on: 
+          - database
+
+    database: #definition of the backend container
+        container_name: "database"
+        build: 
+          context: "C:\\Users\\malol\\OneDrive - Fondation EPF\\EPF\\4A\\S2\\DevOps\\MMMDE4IN21_DevOps\\Lab1\\DataBase"
+        networks:
+          - app-network
+
+    httpd: #instructions to follow to build it
+        build:
+          context: "C:\\Users\\malol\\OneDrive - Fondation EPF\\EPF\\4A\\S2\\DevOps\\MMMDE4IN21_DevOps\\Lab1\\Http server"
+        ports: #ports of the container to discuss with 
+          - "8080:80"
+        networks:
+          - app-network
+        depends_on:
+          - backend
+
+1-4 Document your docker-compose file
+
+networks: #definition of the network
+    app-network:
+```
