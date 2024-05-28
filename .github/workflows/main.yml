@@ -24,4 +24,5 @@ jobs:
 
       #finally build your app with the latest command
       - name: Build and test with Maven
-        run: mvn clean install --file /API/simple-api-student-main/
+        run: cd /API/simple-api-student-main/
+        mvn clean install
