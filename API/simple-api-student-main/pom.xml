@@ -8,9 +8,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>fr.takima.training</groupId>
-	<artifactId>simple-api</artifactId>
+	<artifactId>simple-api-student-main</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>simple-api</name>
+	<name>simple-api-student-main</name>
 	<description>Simple API demo project for Spring Boot</description>
 
 	<properties>
