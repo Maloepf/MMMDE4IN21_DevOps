@@ -55,7 +55,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           # relative path to the place where source code with Dockerfile is located
-          context: ./Database
+          context: ./DataBase
           # Note: tags has to be all lower-case
           tags:  ${{secrets.DOCKERHUB_USERNAME}}/link_app-database:latest
           # build on feature branches, push only on main branch
