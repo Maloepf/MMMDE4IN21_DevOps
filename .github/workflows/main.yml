@@ -24,7 +24,7 @@ jobs:
 
       # build your app with Maven and include SonarCloud analysis
       - name: Build, test with Maven, and run SonarCloud analysis
-        run: mvn -B verify sonar:sonar -Dsonar.projectKey=devops-2024 -Dsonar.organization=devops-school -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+        run: mvn -B verify sonar:sonar -Dsonar.projectKey=devopsmalolepf_malolepf -Dsonar.organization=devopsmalolepf -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}
         working-directory: ./API/simple-api-student-main/
   
   # define job to build and publish docker image
