@@ -1,9 +1,9 @@
 ---
 # tasks file for roles/create_network
 
-- name: Create Docker Network
-  docker_network:
-    name: app-network
-    state: present
+- name: Create Docker Network #name of the task
+  docker_network: #docker object to interact with
+    name: app-network #name of the network
+    state: present #action that must be done on the object
   vars:
     ansible_python_interpreter: /usr/bin/python3

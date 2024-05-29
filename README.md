@@ -244,16 +244,15 @@ jobs:
 
 # TP 3: Discover Ansible
 
-Inventories
+## Introduction
+### Inventories
 By default, Ansible's inventory is saved in the location /etc/ansible/hosts where you already defined your server.
 
 The headings between brackets (eg: [webservers]) are used to group sets of hosts together, they are called, surprisingly, groups. You could regroup them by roles like database servers, front-ends, reverse proxies, build servers…
 
-Let’s create a project specific inventory, in your project create an ansible directory, then create a new directory called inventories and in this folder a new file (my-project/ansible/inventories/setup.yml).
+Let’s create a project specific inventory, in your project create an [ansible directory](/my-project/ansible/).
 
-Test your inventory with the ping command:
-
-```
+```bash
 ansible all -i inventories/setup.yml -m ping
 ```
 ```
@@ -265,14 +264,13 @@ malo.lajous.takima.cloud | SUCCESS => {
     "ping": "pong"
 }
 ```
-Facts
-Let’s get information about hosts: these kinds of variables, not set by the user but discovered are called facts.
+### Facts
 
 Facts are prefixed by ansible_ and represent information derived from speaking with your remote systems.
 
 You will request your server to get your OS distribution, thanks to the setup module.
 
-```
+``` bash
 ansible all -i inventories/setup.yml -m setup -a "filter=ansible_distribution*"
 ```
 ```
@@ -291,7 +289,7 @@ malo.lajous.takima.cloud | SUCCESS => {
 }
 ```
 Earlier you installed Apache httpd server on your machine, let’s remove it:
-```
+```bash 
 ansible all -i inventories/setup.yml -m yum -a "name=httpd state=absent" --become
 ```
 ```
@@ -315,9 +313,11 @@ malo.lajous.takima.cloud | CHANGED => {
 
 3-1 Document your inventory and base commands
 
-Playbooks
-First playbook
-Let’s create a first very simple playbook in my-project/ansible/playbook.yml.
+See [setup.yml](/my-project/ansible/inventories/setup.yml).</br>
+
+## Playbooks
+### First playbook
+Let’s create a first very simple [playbook](/my-project/ansible/playbook.yml).
 ```
 ansible-playbook -i inventories/setup.yml playbook.yml
 ```
@@ -331,19 +331,20 @@ PLAY RECAP *********************************************************************
 malo.lajous.takima.cloud   : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
 
-Advanced Playbook
+### Advanced Playbook
 
 Let’s create a playbook to install docker on your server.
 
 Good news, we now have docker installed on our server. One task was created to be sure docker was running, you could check this with an ad-hoc command or by connecting to the server until you really trust ansible.
 
-Using roles
+### Using roles
 Our docker install playbook is nice and all but it will be cleaner to have in a specific place, in a role for example. Create a docker role and move the installation task there:
 
 3-2 Document your playbook
 
+See [playbook.yml](/my-project/ansible/playbook.yml).
 
-Deploy your App
+## Deploy your App
 Time has come to deploy your application to your Ansible managed server.
 
-Create specific roles for each part of your application and use the Ansible module: docker_container to start your dockerized application. Here is what a docker_container task should look like:
+See [ansible/](/my-project/ansible/).

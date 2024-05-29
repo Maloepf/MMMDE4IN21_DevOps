@@ -1,8 +1,8 @@
-- hosts: all
+- hosts: all #all hosts can run this coded
   gather_facts: false
-  become: true
+  become: true #allows the administrateur execution
 
-  roles:
+  roles: #the list of all the roles that must be executed
     - install_docker
     - create_network
     - launch_database
