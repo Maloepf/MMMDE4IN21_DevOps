@@ -1,31 +1,33 @@
 version: '3.7'
 
 services:
-    backend:
-        container_name: "backend"
-        build:
-          context: "C:\\Users\\malol\\OneDrive - Fondation EPF\\EPF\\4A\\S2\\DevOps\\MMMDE4IN21_DevOps\\Lab1\\API\\simple-api-student-main"
-        networks:
-          - app-network
-        depends_on:
-          - database
+  backend:
+    container_name: "backend" # Sets the container name
+    build:
+      context: "C:\\Users\\malol\\OneDrive - Fondation EPF\\EPF\\4A\\S2\\DevOps\\MMMDE4IN21_DevOps\\Lab1\\API\\simple-api-student-main"
+      # Specifies the build context for the backend service, pointing to the Dockerfile
+    networks:
+      - app-network # Connects the backend service to the "app-network".
+    depends_on:
+      - database # Indicates that the backend service depends on the database service to start first.
 
-    database:
-        container_name: "database"
-        build:
-          context: "C:\\Users\\malol\\OneDrive - Fondation EPF\\EPF\\4A\\S2\\DevOps\\MMMDE4IN21_DevOps\\Lab1\\DataBase"
-        networks:
-          - app-network
+  database:
+    container_name: "database"
+    build:
+      context: "C:\\Users\\malol\\OneDrive - Fondation EPF\\EPF\\4A\\S2\\DevOps\\MMMDE4IN21_DevOps\\Lab1\\DataBase"
+    networks:
+      - app-network
 
-    httpd:
-        build:
-          context: "C:\\Users\\malol\\OneDrive - Fondation EPF\\EPF\\4A\\S2\\DevOps\\MMMDE4IN21_DevOps\\Lab1\\Http server"
-        ports:
-          - "8080:80"
-        networks:
-          - app-network
-        depends_on:
-          - backend
+  httpd:
+    build:
+      context: "C:\\Users\\malol\\OneDrive - Fondation EPF\\EPF\\4A\\S2\\DevOps\\MMMDE4IN21_DevOps\\Lab1\\Http server"
+    ports:
+      - "8080:80" # Maps port 8080 on the host to port 80 in the container.
+    networks:
+      - app-network
+    depends_on:
+      - backend 
 
 networks:
-    app-network:
+  app-network:
+    # Defines a custom network named "app-network" to facilitate communication between the containers.

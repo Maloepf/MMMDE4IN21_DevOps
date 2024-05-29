@@ -1,0 +1,14 @@
+---
+# tasks file for roles/lauchn_database
+
+- name: Run Database Container
+  docker_container:
+    name: database
+    image: malolepf/link_app-database:latest
+    env:
+      DB_USER: usr
+      DB_PASSWORD: pwd
+    networks:
+      - name: app-network
+  vars:
+    ansible_python_interpreter: /usr/bin/python3

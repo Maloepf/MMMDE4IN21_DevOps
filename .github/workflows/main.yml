@@ -1,24 +1,21 @@
-name: CI devops 2024
+name: CI devops 2024 #name of the workflow
 
-on:
-  # to begin you want to launch this job in main and develop
-  push:
-    branches: 
+on: #Specifies the events that trigger the workflow. In this case, the workflow runs on pushes to the main and develop branches, as well as on pull requests.
+  push: #action that start the workflow
+    branches: #branches when pushed on that start the workflow
       - main
       - develop
-  pull_request:
+  pull_request: 
 
-jobs:
-  test-backend: 
-    runs-on: ubuntu-22.04
-    steps:
-      # checkout your github code using actions/checkout@v2.5.0
-      - uses: actions/checkout@v2.5.0
+jobs: #section of actions to run
+  test-backend: #name of the job
+    runs-on: ubuntu-22.04 #definition of the os used
+    steps: #definition of section step
+      - uses: actions/checkout@v2.5.0 #set of the action to use
 
-      # do the same with another action (actions/setup-java@v3) that enable to setup jdk 17
-      - name: Set up JDK 17
+      - name: Set up JDK 17 #name of the action
         uses: actions/setup-java@v3
-        with:
+        with: #section definition of the caratristics of the aciton
           java-version: '17'
           distribution: 'adopt'
 

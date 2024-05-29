@@ -1,0 +1,17 @@
+---
+# tasks file for roles/launch_app
+
+- name: Run Proxy Container
+  docker_container:
+    name: backend
+    image: malolepf/link_app-backend:latest
+    env:
+      DB_host: database
+      DATABASE_USER: usr
+      DATABASE_PASSWORD: pwd
+      DATABASE_NAME: db
+      DATABASE_PORT: "5432"
+    networks:
+      - name: app-network
+  vars:
+    ansible_python_interpreter: /usr/bin/python3

@@ -1,0 +1,13 @@
+---
+# tasks file for roles/launc_proxy
+
+- name: Run Proxy Container
+  docker_container:
+    name: httpd-1
+    image: malolepf/link_app-httpd:latest
+    state: started
+    networks:
+      - name: app-network
+    ports: "80:80"
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
