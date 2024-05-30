@@ -9,7 +9,7 @@ on:
 
 jobs: 
   test-backend: 
-    runs-on:
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2.5.0
 
