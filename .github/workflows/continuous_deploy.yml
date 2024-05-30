@@ -22,7 +22,6 @@ jobs:
             
         - name: Add SSH known hosts
           run: |
-            mkdir -p ~/.ssh
             ssh-keyscan -H malo.lajous.takima.cloud >> ~/.ssh/known_hosts
     
             sudo apt-get install -y ansible
