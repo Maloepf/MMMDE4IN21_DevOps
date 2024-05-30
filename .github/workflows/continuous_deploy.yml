@@ -1,0 +1,34 @@
+name: deploy on server
+
+on:
+    workflow_run:
+        workflows: ["CI docker"]
+      push:
+        branches:
+          - main
+        
+jobs: 
+    run-ansible-playbook:
+        runs-on: ubuntu-latest
+        
+        steps:
+        - name: Checkout repository
+          uses: actions/checkout@v2
+    
+        - name: SSH
+          uses: webfactory/ssh-agent@v0.5.3  # Use the webfactory/ssh-agent action to set up SSH
+          with:
+            ssh-private-key: ${{ secrets.ANSIBLE_TOKEN }} 
+            
+        - name: Add SSH known hosts
+          run: |
+            mkdir -p ~/.ssh
+            ssh-keyscan -H malo.lajous.takima.cloud >> ~/.ssh/known_hosts
+    
+            sudo apt-get install -y ansible
+        - name: Set up Ansible
+          run: |
+            sudo apt-get update
+     
+        - name: Run Ansible Playbook
+          run: ansible-playbook -i my-project/ansible/inventories/setup.yml my-project/ansible/playbook.yml

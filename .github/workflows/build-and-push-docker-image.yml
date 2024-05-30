@@ -1,31 +1,15 @@
 name: CI docker #name of the workflow
 
 on:
+  workflow_run:
+    workflows: ["CI backend"]
   push:
     branches:
       - main
-  pull_request: 
 
 jobs: #section of actions to run
-  test-backend: #name of the job
-    runs-on: ubuntu-22.04 #definition of the os used
-    steps: #definition of section step
-      - uses: actions/checkout@v2.5.0 #set of the action to use
-
-      - name: Set up JDK 17 #name of the action
-        uses: actions/setup-java@v3
-        with: #section definition of the caratristics of the aciton
-          java-version: '17'
-          distribution: 'adopt'
-
-      # build your app with Maven and include SonarCloud analysis
-      - name: Build, test with Maven, and run SonarCloud analysis
-        run: mvn -B verify sonar:sonar -Dsonar.projectKey=devopsmalolepf_malolepf -Dsonar.organization=devopsmalolepf -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-        working-directory: ./API/simple-api-student-main/
-  
   # define job to build and publish docker image
   build-and-push-docker-image:
-    needs: test-backend
     # run only when code is compiling and tests are passing
     runs-on: ubuntu-22.04
 
